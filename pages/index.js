@@ -4,10 +4,18 @@ import Head from "next/head"
 
 import styles from "../ui/styles/Home.module.css"
 
-import { GreetingSection } from "../ui/components/GreetingSection"
-import { ImageSection } from "../ui/components/ImageSection"
+import authMethods from "../ui/components/auth"
+import {  useState } from "react"
 
 function HomePage() {
+  const [isLoading, setIsLoading] = useState(false)
+  function handleClose() {
+    setIsLoading(false)
+  }
+  const methods = authMethods({setIsLoading,handleClose})
+  function handleLogin() {
+    methods.login();
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -17,11 +25,13 @@ function HomePage() {
         <h3 className={styles.title}>
           Welcome to Next.js Internet Computer Starter Template!
         </h3>
+        <button disabled={isLoading} onClick={handleLogin}>Login</button>
+        
 
         <img src="/logo.png" alt="DFINITY logo" className={styles.logo} />
 
-        <GreetingSection />
-        <ImageSection />
+        {/* <GreetingSection /> */}
+        {/* <ImageSection /> */}
       </main>
     </div>
   )
